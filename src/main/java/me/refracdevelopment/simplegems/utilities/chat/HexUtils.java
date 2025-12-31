@@ -389,7 +389,7 @@ public final class HexUtils {
         public ChatColor nextChatColor() {
             // Gradients will use the first color if the entire spectrum won't be available to preserve prettiness
             if (XMaterial.supports(16) || this.steps <= 1)
-                return translateHex(this.gradients.getFirst().colorAt(0));
+                return translateHex(this.gradients.get(0).colorAt(0));
             return translateHex(this.nextColor());
         }
 

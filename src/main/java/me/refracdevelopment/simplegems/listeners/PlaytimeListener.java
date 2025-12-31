@@ -4,6 +4,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplegems.SimpleGems;
 import me.refracdevelopment.simplegems.api.SimpleGemsAPI;
 import me.refracdevelopment.simplegems.player.data.ProfileData;
+import me.refracdevelopment.simplegems.utilities.SimpleGemsMultiplierUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,16 +28,8 @@ public class PlaytimeListener implements Listener {
             return; // Playtime plugin not installed
         }
         
-        // Get prestige level from LifeStealZ for multiplier
-        String prestigeStr = PlaceholderAPI.setPlaceholders(player, "%lifestealz_prestige_count%");
-        int prestigeLevel = 0;
-        
-        if (prestigeStr != null && !prestigeStr.isEmpty() && !prestigeStr.equals("InvalidPlaceholder")) {
-            try {
-                prestigeLevel = Integer.parseInt(prestigeStr);
-            } catch (NumberFormatException ignored) {
-            }
-        }
+        // ✅ Get multiplier from LuckPerms permission (not hardcoded calculation)
+        double gemMultiplier = SimpleGemsMultiplierUtil.getPrestigeMultiplier(player);
         
         try {
             long dailyMinutes = parsePlaytime(playtimeStr);
@@ -45,10 +38,6 @@ public class PlaytimeListener implements Listener {
             
             int playtimeRewardPerHour = SimpleGems.getInstance().getSettings().PLAYTIME_PER_HOUR;
             int dailyCap = SimpleGems.getInstance().getSettings().PLAYTIME_DAILY_CAP;
-            double multiplierPerLevel = SimpleGems.getInstance().getSettings().PRESTIGE_MULTIPLIER_PER_LEVEL;
-            
-            // ✅ CORRECT: Use prestige multiplier from LifeStealZ
-            double gemMultiplier = 1.0 + (prestigeLevel * multiplierPerLevel);
             
             double playGems = Math.min(((dailyMinutes / 60.0) * playtimeRewardPerHour * gemMultiplier), dailyCap);
             

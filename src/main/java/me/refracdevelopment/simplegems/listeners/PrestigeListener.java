@@ -4,6 +4,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplegems.SimpleGems;
 import me.refracdevelopment.simplegems.api.SimpleGemsAPI;
 import me.refracdevelopment.simplegems.player.data.ProfileData;
+import me.refracdevelopment.simplegems.utilities.SimpleGemsMultiplierUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,7 +29,7 @@ public class PrestigeListener implements Listener {
         
         // Delay to allow command to execute first
         SimpleGems.getInstance().getFoliaLib().getScheduler().runNextTick(task -> {
-            // ✅ CORRECT: Use the actual LifeStealZ placeholder
+            // ✅ Read prestige level from LifeStealZ
             String prestigeStr = PlaceholderAPI.setPlaceholders(player, "%lifestealz_prestige_count%");
             
             if (prestigeStr == null || prestigeStr.isEmpty() || prestigeStr.equals("InvalidPlaceholder")) {
@@ -45,8 +46,9 @@ public class PrestigeListener implements Listener {
             if (newPrestige > data.getPrestigeLevel()) {
                 int baseReward = SimpleGems.getInstance().getSettings().PRESTIGE_GEM_REWARD_BASE;
                 double gemsReward = (double)(baseReward * newPrestige);
-                double multiplierPerLevel = SimpleGems.getInstance().getSettings().PRESTIGE_MULTIPLIER_PER_LEVEL;
-                double newMultiplier = 1.0 + (newPrestige * multiplierPerLevel);
+                
+                // ✅ Get multiplier from LuckPerms permission (set by LifeStealZ)
+                double newMultiplier = SimpleGemsMultiplierUtil.getPrestigeMultiplier(player);
                 
                 gemsAPI.giveGems(player, gemsReward);
                 data.setPrestigeLevel(newPrestige);
