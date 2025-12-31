@@ -224,7 +224,6 @@ public final class SimpleGems extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getServer().getPluginManager().registerEvents(new PrestigeListener(), this);
         getServer().getPluginManager().registerEvents(new PlaytimeListener(), this);
-        getServer().getPluginManager().registerEvents(new GemsCommandInterceptor(), this);
 
         // Loads all available menu data
         if (getServer().getPluginManager().isPluginEnabled("ItemsAdder"))

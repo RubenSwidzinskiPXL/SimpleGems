@@ -93,6 +93,14 @@ public class GiveCommand extends SubCommand {
                 double finalAmount = amount * multiplier;
                 SimpleGems.getInstance().getGemsAPI().giveGems(targetPlayer, finalAmount);
                 
+                // Update message to show final amount
+                placeholders = StringPlaceholders.builder()
+                        .addAll(Placeholders.setPlaceholders(targetPlayer))
+                        .add("gems", String.valueOf((long)finalAmount))
+                        .add("gems_formatted", Methods.format(finalAmount))
+                        .add("gems_decimal", Methods.formatDecimal(finalAmount))
+                        .build();
+                
                 // Log if multiplier was applied
                 if (multiplier > 1.0) {
                     SimpleGems.getInstance().getLogger().info("[GemsCommand] Applied " + String.format("%.2f", multiplier) + "x multiplier to " + targetPlayer.getName() + ": " + amount + " → " + String.format("%.1f", finalAmount) + " gems");
