@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import me.refracdevelopment.simplegems.SimpleGems;
 import me.refracdevelopment.simplegems.utilities.Methods;
 import me.refracdevelopment.simplegems.utilities.Permissions;
+import me.refracdevelopment.simplegems.utilities.SimpleGemsMultiplierUtil;
 import me.refracdevelopment.simplegems.utilities.chat.Placeholders;
 import me.refracdevelopment.simplegems.utilities.chat.RyMessageUtils;
 import me.refracdevelopment.simplegems.utilities.chat.StringPlaceholders;
@@ -86,8 +87,17 @@ public class GiveCommand extends SubCommand {
 
             if (commandSender instanceof Player player)
                 SimpleGems.getInstance().getGemsAPI().giveGems(player, targetPlayer, (double)amount);
-            else
-                SimpleGems.getInstance().getGemsAPI().giveGems(targetPlayer, (double)amount);
+            else {
+                // ✅ Apply prestige multiplier when called from console/plugins
+                double multiplier = SimpleGemsMultiplierUtil.getPrestigeMultiplier(targetPlayer);
+                double finalAmount = amount * multiplier;
+                SimpleGems.getInstance().getGemsAPI().giveGems(targetPlayer, finalAmount);
+                
+                // Log if multiplier was applied
+                if (multiplier > 1.0) {
+                    SimpleGems.getInstance().getLogger().info("[GemsCommand] Applied " + String.format("%.2f", multiplier) + "x multiplier to " + targetPlayer.getName() + ": " + amount + " → " + String.format("%.1f", finalAmount) + " gems");
+                }
+            }
 
             if (message.contains("-s"))
                 return;

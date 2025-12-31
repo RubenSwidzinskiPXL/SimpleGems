@@ -27,8 +27,8 @@ public class PrestigeListener implements Listener {
         
         if (data == null) return;
         
-        // Delay to allow command to execute first
-        SimpleGems.getInstance().getFoliaLib().getScheduler().runNextTick(task -> {
+        // Delay to allow LifeStealZ to grant permission first (500ms = 10 ticks)
+        SimpleGems.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(SimpleGems.getInstance(), () -> {
             // ✅ Read prestige level from LifeStealZ
             String prestigeStr = PlaceholderAPI.setPlaceholders(player, "%lifestealz_prestige_count%");
             
@@ -59,6 +59,6 @@ public class PrestigeListener implements Listener {
                                 String.format("%.2f", newMultiplier) + " multiplier!";
                 player.sendMessage(message);
             }
-        });
+        }, 10); // 10 ticks = 500ms delay to ensure permission is synced
     }
 }
