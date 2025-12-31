@@ -15,6 +15,8 @@ public class ProfileData {
     private final UUID uuid;
 
     private Stat gems = new Stat();
+    private int prestigeLevel = 0;
+    private double gemMultiplier = 1.0;
 
     public ProfileData(UUID uuid, String name) {
         this.uuid = uuid;

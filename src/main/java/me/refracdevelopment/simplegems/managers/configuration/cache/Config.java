@@ -12,6 +12,14 @@ public class Config {
     public String DATA_TYPE;
     public boolean CHECK_FOR_UPDATES;
 
+    // Prestige
+    public int PRESTIGE_GEM_REWARD_BASE;
+    public double PRESTIGE_MULTIPLIER_PER_LEVEL;
+
+    // Playtime
+    public int PLAYTIME_PER_HOUR;
+    public int PLAYTIME_DAILY_CAP;
+
     // Top
     public String GEMS_TOP_TITLE;
     public String GEMS_TOP_FORMAT;
@@ -38,6 +46,14 @@ public class Config {
         LEADERBOARD_UPDATE_INTERVAL = SimpleGems.getInstance().getConfigFile().getLong("leaderboard-update-interval");
         DATA_TYPE = SimpleGems.getInstance().getConfigFile().getString("data-type");
         CHECK_FOR_UPDATES = SimpleGems.getInstance().getConfigFile().getBoolean("check-for-updates");
+
+        // Prestige
+        PRESTIGE_GEM_REWARD_BASE = SimpleGems.getInstance().getConfigFile().getInt("prestige.gem-reward-base");
+        PRESTIGE_MULTIPLIER_PER_LEVEL = SimpleGems.getInstance().getConfigFile().getDouble("prestige.multiplier-per-level");
+
+        // Playtime
+        PLAYTIME_PER_HOUR = SimpleGems.getInstance().getConfigFile().getInt("rewards.playtime-per-hour");
+        PLAYTIME_DAILY_CAP = SimpleGems.getInstance().getConfigFile().getInt("rewards.daily-cap");
 
         // Top
         GEMS_TOP_TITLE = SimpleGems.getInstance().getConfigFile().getString("gems-top.title");

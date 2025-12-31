@@ -18,6 +18,8 @@
 # %simplegems_balance% - Get the unformatted gems amount (100000)
 # %simplegems_balance_formatted% - Get the formatted gems amount (100k)
 # %simplegems_balance_decimal% - Get the decimal formatted gems amount (100000.0)
+# %simplegems_prestige_level% - Get the player's prestige level
+# %simplegems_prestige_multiplier% - Get the player's prestige multiplier (e.g., 1.10)
 # Actions:
 # [console] - Send a console command
 # [message] - Send a message to the player
@@ -61,6 +63,24 @@ mysql:
 # This uses the /gems version command permission
 # permission: simplegems.command.version
 check-for-updates: true
+
+# Prestige system settings
+prestige:
+  # Base gems reward per prestige level (multiplied by level number)
+  # Example: 50 * 1 = 50 gems for prestige 1, 50 * 2 = 100 gems for prestige 2
+  gem-reward-base: 50
+  # Multiplier increase per prestige level
+  # Example: 1.0 + (level * 0.05) = 1.05 multiplier at prestige 1, 1.10 at prestige 2
+  multiplier-per-level: 0.05
+
+# Rewards system settings
+rewards:
+  # Gems awarded per hour of playtime (applied on player join)
+  playtime-per-hour: 5
+  # Maximum gems awarded per join from playtime (daily cap)
+  daily-cap: 50
+  # Chance for gems to drop from CrazyCrates (0.0 to 1.0, where 0.25 = 25%)
+  crate-drop-chance: 0.25
 
 gems-top:
   # This is used for viewing top players

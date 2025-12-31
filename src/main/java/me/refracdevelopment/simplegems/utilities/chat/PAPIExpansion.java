@@ -40,6 +40,10 @@ public class PAPIExpansion extends PlaceholderExpansion {
                 return Methods.format(gems);
             case "balance_decimal":
                 return Methods.formatDecimal(gems);
+            case "prestige_level":
+                return String.valueOf(SimpleGems.getInstance().getGemsAPI().getProfileData(player).getPrestigeLevel());
+            case "prestige_multiplier":
+                return String.format("%.2f", SimpleGems.getInstance().getGemsAPI().getProfileData(player).getGemMultiplier());
             default:
                 if (params.startsWith("player_")) {
                     try {
